@@ -6,10 +6,10 @@ class BeHandle(Structure):
 #                      return type, flag,  arg,    feature_recorder_name, feature,  feature_len, context,  context_len
 BeCallback = CFUNCTYPE(c_int,       c_int, c_uint, c_char_p,              c_char_p, c_size_t,    c_char_p, c_size_t   )
 
-lib_be = cdll.LoadLibrary("libfakelib.so")
+lib_be = cdll.LoadLibrary("libbulkextractor.so")
 lib_be.bulk_extractor_open.restype = POINTER(BeHandle)
-lib_be.bulk_extractor_analyze_dev.argtypes = [POINTER(BeHandle), BeCallback, c_char_p]
-lib_be.bulk_extractor_analyze_dir.argtypes = [POINTER(BeHandle), BeCallback, c_char_p]
+#lib_be.bulk_extractor_analyze_dev.argtypes = [POINTER(BeHandle), BeCallback, c_char_p]
+#lib_be.bulk_extractor_analyze_dir.argtypes = [POINTER(BeHandle), BeCallback, c_char_p]
 lib_be.bulk_extractor_analyze_buf.argtypes = [POINTER(BeHandle), BeCallback, POINTER(c_ubyte), c_size_t]
 
 def bulk_extractor_open():
@@ -124,8 +124,8 @@ def main():
 
         b_e.raw_cb = raw_callback
 
-        b_e.analyze_dev("/dev/null")
-        b_e.analyze_dir("/home/nobody")
+        #b_e.analyze_dev("/dev/null")
+        #b_e.analyze_dir("/home/nobody")
         b_e.analyze_buf("abcdefghijklmnopqrstuvwxyz0123456789")
 
         b_e.raw_cb = None
@@ -133,8 +133,8 @@ def main():
         b_e.histogram_cb = histogram_callback
         b_e.carve_cb = carve_callback
 
-        b_e.analyze_dev("/dev/null")
-        b_e.analyze_dir("/home/nobody")
+        #b_e.analyze_dev("/dev/null")
+        #b_e.analyze_dir("/home/nobody")
         b_e.analyze_buf("abcdefghijklmnopqrstuvwxyz0123456789")
 
 if __name__ == "__main__":
